@@ -77,3 +77,9 @@ func TestVerse(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkSong(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Song()
+	}
+}

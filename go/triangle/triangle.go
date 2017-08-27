@@ -1,16 +1,40 @@
 package triangle
 
+import "math"
+
 const testVersion = 3
 
-func KindFromSides(a, b, c float64) Kind
+type Kind int
 
-// Notice KindFromSides() returns this type. Pick a suitable data type.
-type Kind
+const (
+	NaT Kind = iota // not a triangle
+	Equ             // equilateral
+	Iso             // isosceles
+	Sca             // scalene
+)
 
-// Pick values for the following identifiers used by the test program.
-NaT // not a triangle
-Equ // equilateral
-Iso // isosceles
-Sca // scalene
+func isTriangle(a, b, c float64) bool {
+	return true &&
+		a > 0 && a < math.Inf(1) && // a valid length
+		b > 0 && b < math.Inf(1) && // b valid length
+		c > 0 && c < math.Inf(1) && // c valid length
+		(a+b) >= c && // sides much add up
+		(a+c) >= b &&
+		(b+c) >= a
+}
 
-// Organize your code for readability.
+func sidesMatch(a, b float64) bool {
+	return a == b
+}
+
+func KindFromSides(a, b, c float64) Kind {
+	kind := Sca
+	if !isTriangle(a, b, c) {
+		kind = NaT
+	} else if sidesMatch(a, b) && sidesMatch(a, c) {
+		kind = Equ
+	} else if sidesMatch(a, b) || sidesMatch(a, c) || sidesMatch(b, c) {
+		kind = Iso
+	}
+	return kind
+}
