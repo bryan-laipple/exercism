@@ -49,6 +49,11 @@ var testCases = []struct {
 		"ACTATGG",
 		2,
 	},
+	{ // small distance in long strands, case insensitive
+		"accaggg",
+		"ACTATGG",
+		2,
+	},
 	{ // non-unique character in first strand
 		"AGA",
 		"AGG",
